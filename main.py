@@ -3,7 +3,7 @@ import os
 import numpy as np
 from time import sleep
 
-subjects = ["", "Huy Hoang", "Brad Pitt"]
+subjects = ["Huy Hoang", "Brad Pitt"]
 
 face_recognizer = cv2.face.LBPHFaceRecognizer_create()
 
@@ -49,7 +49,7 @@ if os.path.exists("trained_faces/trained_faces.yml"):
         # draw a rectangle around face detected
         draw_rectangle(img, rect)
         # draw name of predicted person
-        draw_text(img, label_text, rect[0], rect[1] - 5)
+        draw_text(img, label_text + " Conf: "+ str(confidence), rect[0], rect[1] - 5)
 
         return img, label_text
     # Start streaming webcam
@@ -65,9 +65,8 @@ if os.path.exists("trained_faces/trained_faces.yml"):
             cv2.imshow("Livestream", frame)
             if cv2.waitKey(10) & 0xFF == ord('q'):
                 break
-        else:
-            continue
-        #sleep(1)
+        
+        sleep(1)
 
             #imwrite("video/photo.jpg", img)
 
@@ -95,7 +94,6 @@ if os.path.exists("trained_faces/trained_faces.yml"):
 else:
     print "No trained faces detected!"
 
-
     def prepare_training_data(data_folder_path):
 
         dirs = os.listdir(data_folder_path)
@@ -105,15 +103,12 @@ else:
         labels = []
 
         for dir_name in dirs:
-            # our subject directories start with letter 's' so
-            # ignore any non-relevant directories if any
+
             if not dir_name.startswith("person"):
                 continue
 
             label = int(dir_name.replace("person", ""))
 
-            # build path of directory containing images for current subject subject
-            # sample subject_dir_path = "training-data/s1"
             subject_dir_path = data_folder_path + "/" + dir_name
 
             # get the images names that are inside the given subject directory
@@ -132,17 +127,11 @@ else:
                 # read image
                 image = cv2.imread(image_path)
 
-                # display an image window to show the image
-                #cv2.imshow("Training on image...", cv2.resize(image, (400, 500)))
-                #cv2.waitKey(100)
-
                 # detect face
-                face, rect = extract_a_face(image)
+                have_face, face, rect = extract_a_face(image)
 
-                if face is not None:
-                    # add face to list of faces
+                if have_face:
                     faces.append(face)
-                    # add label for this face
                     labels.append(label)
 
         cv2.destroyAllWindows()

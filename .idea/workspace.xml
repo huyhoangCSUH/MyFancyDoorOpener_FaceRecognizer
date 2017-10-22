@@ -2,25 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="be9d4fb0-ac71-4cc8-8a93-5e7a4aa2a61e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/training-data/s1/1.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/training-data/s1/2.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/training-data/s1/3.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/training-data/s1/4.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/training-data/s1/5.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/training-data/s1/6.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/training-data/s1/7.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/training-data/s1/8.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/training-data/s2/1.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/training-data/s2/2.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/training-data/s2/3.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/training-data/s2/4.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/training-data/s2/5.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/training-data/s2/6.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/training-data/s2/7.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/training-data/s2/8.jpg" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/training-data/person2/1.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/training-data/person2/2.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/training-data/person2/3.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/training-data/person2/4.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/training-data/person2/5.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/training-data/person2/6.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/training-data/person2/7.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/training-data/person2/8.jpg" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/trained_faces/trained_faces.yml" afterPath="$PROJECT_DIR$/trained_faces/trained_faces.yml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -34,8 +25,8 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="782">
-              <caret line="46" column="36" lean-forward="true" selection-start-line="46" selection-start-column="36" selection-end-line="46" selection-end-column="36" />
+            <state relative-caret-position="373">
+              <caret line="67" column="8" lean-forward="false" selection-start-line="67" selection-start-column="8" selection-end-line="67" selection-end-column="8" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -212,8 +203,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="782">
-          <caret line="46" column="36" lean-forward="true" selection-start-line="46" selection-start-column="36" selection-end-line="46" selection-end-column="36" />
+        <state relative-caret-position="373">
+          <caret line="67" column="8" lean-forward="false" selection-start-line="67" selection-start-column="8" selection-end-line="67" selection-end-column="8" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
