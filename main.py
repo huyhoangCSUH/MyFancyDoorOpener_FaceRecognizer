@@ -2,20 +2,23 @@ import cv2
 import os
 import numpy as np
 from time import sleep
+import socket
+import sys
+import time
 
-subjects = ["Huy Hoang", "Brad Pitt"]
+subjects = ["Huy Hoang", "Brad Pitt", "Tahsin", "Yong Li"]
 
 face_recognizer = cv2.face.LBPHFaceRecognizer_create()
 
 
-def extract_a_face(img):
+def extract_a_face(img, scalefact):
     # convert the test image to gray image as opencv face detector expects gray images
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
     face_cascade = cv2.CascadeClassifier(
         '/usr/local/Cellar/opencv/3.3.0_3/share/OpenCV/lbpcascades/lbpcascade_frontalface.xml')
 
-    faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5);
+    faces = face_cascade.detectMultiScale(gray, scaleFactor=scalefact, minNeighbors=5, minSize=(100, 100));
 
     # if no faces are detected then return original img
     if len(faces) == 0:
@@ -59,7 +62,7 @@ if not os.path.exists("trained_faces/trained_faces.yml"):
                 image = cv2.imread(image_path)
 
                 # detect face
-                have_face, face, rect = extract_a_face(image)
+                have_face, face, rect = extract_a_face(image, 1.05)
 
                 if have_face:
                     faces.append(face)
@@ -78,6 +81,7 @@ if not os.path.exists("trained_faces/trained_faces.yml"):
 face_recognizer.read("trained_faces/trained_faces.yml")
 print "Trained data loaded!"
 
+
 def draw_rectangle(img, rect):
     (x, y, w, h) = rect
     cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
@@ -88,7 +92,6 @@ def draw_text(img, text, x, y):
 
 
 def predict(img):
-
     # predict the image using our face recognizer
     label, confidence = face_recognizer.predict(face)
     # get name of respective label returned by face recognizer
@@ -97,22 +100,38 @@ def predict(img):
     # draw a rectangle around face detected
     draw_rectangle(img, rect)
     # draw name of predicted person
-    draw_text(img, label_text + " Conf: "+ str(confidence), rect[0], rect[1] - 5)
+    draw_text(img, label_text + " Conf: "+ str(int(confidence)), rect[0], rect[1] - 5)
     return img, label_text
+
+HOST = 'http://huyhoang.io'
+PORT = 9999
+socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+socket.connect((HOST, PORT))
+
+
+def send_file(filename):
+    with open(filename, 'rb') as file_to_send:
+        for data in file_to_send:
+            socket.sendall(data)
+
 
 # Start streaming webcam
 cam = cv2.VideoCapture(0)
 while 1:
     ret, frame = cam.read()
     if ret:
-
-        have_face, face, rect = extract_a_face(frame)
+        have_face, face, rect = extract_a_face(frame, 1.3)
         if have_face:
             frame, person = predict(frame)
-        #cv2.imwrite("video/current_photo.jpg", detected_pic)
-        cv2.imshow("Livestream", frame)
+
+        #cv2.imshow("Livestream", frame)
+        cv2.imwrite("webcam_cap.jpg", frame)
+
+        send_file("webcam_cap.jpg")
+
         if cv2.waitKey(10) & 0xFF == ord('q'):
             break
+    time.sleep(5)
 
 cam.release()
 cv2.destroyAllWindows()
