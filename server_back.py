@@ -32,7 +32,7 @@ while 1:
         elif pilot_msg == "photo":
             conn2, addr2 = sock.accept()
             print "Getting person photo"
-            file_to_write = open('web_cap.jpg', 'wb')
+            file_to_write = open('video/web_cap.jpg', 'wb')
             while True:
                 data = conn2.recv(1024)
                     #print data

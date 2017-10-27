@@ -154,6 +154,8 @@ while 1:
         else:
             person_info = "{person: none, distance: 0mm}"
         #cv2.imshow("Livestream", frame)
+
+    # Resize before sending
     frame = cv2.resize(frame, (640, 360))
     cv2.imwrite("webcam_cap.jpg", frame)
 
