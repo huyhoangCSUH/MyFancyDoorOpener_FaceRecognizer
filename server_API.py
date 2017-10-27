@@ -7,29 +7,19 @@ app = Flask(__name__)
 def index():
     return 'Under construction!'
 
+
 @app.route('/getinfo')
 def get_info():
-    with open("auth_file.txt", "rb") as fin:
+    with open("person_info.txt", "rb") as fin:
         person_info = fin.read()
         # print person_info
         return person_info
 
-'''
-urls = (
-    '/getinfo', 'get_info',
-    '/setauth', 'set_auth'
-)
 
-app = web.application(urls, globals())
+@app.route('/setauth', methods=['POST'])
+def set_auth():
+    with open("auth_stat.txt", "w") as f:
+        f.write("OK")
+    return "Auth set!"
 
 
-class get_info:
-    def GET(self):
-        with open("auth_file.txt", "rb") as fin:
-            person_info = fin.read()
-            #print person_info
-            return person_info
-
-if __name__ == "__main__":
-    app.run()
-'''
