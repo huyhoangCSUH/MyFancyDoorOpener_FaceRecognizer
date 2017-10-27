@@ -6,6 +6,7 @@ import socket
 import sys
 import time
 
+
 subjects = ["Huy Hoang", "Brad Pitt", "Tahsin", "Yong Li"]
 
 face_recognizer = cv2.face.LBPHFaceRecognizer_create()
@@ -103,16 +104,41 @@ def predict(img):
     draw_text(img, label_text + " Conf: "+ str(int(confidence)), rect[0], rect[1] - 5)
     return img, label_text
 
-HOST = 'http://huyhoang.io'
+
+HOST = 'huyhoang.io'
 PORT = 9999
-socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-socket.connect((HOST, PORT))
 
 
-def send_file(filename):
-    with open(filename, 'rb') as file_to_send:
-        for data in file_to_send:
-            socket.sendall(data)
+def send_video_file(file_to_send):
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect((HOST, PORT))
+
+    s.send("photo")
+    print "pilot sent"
+    s.close()
+
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect((HOST, PORT))
+    file_to_send = open(file_to_send, 'rb')
+    l = file_to_send.read(1024)
+    while l:
+        #print 'Sending...'
+        s.send(l)
+        l = file_to_send.read(1024)
+    # s.shutdown(socket.SHUT_WR)
+    s.close()
+    file_to_send.close()
+
+def send_auth_stat(message):
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect((HOST, PORT))
+    s.send("auth_stat")
+    print "auth pilot sent!"
+    s.close()
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect((HOST, PORT))
+    s.send(message)
+    s.close()
 
 
 # Start streaming webcam
@@ -120,18 +146,25 @@ cam = cv2.VideoCapture(0)
 while 1:
     ret, frame = cam.read()
     if ret:
-        have_face, face, rect = extract_a_face(frame, 1.3)
+        have_face, face, rect = extract_a_face(frame, 1.2)
+        person_info = ""
         if have_face:
             frame, person = predict(frame)
-
+            person_info = "{person: " + person + ", distance: 500mm }"
+        else:
+            person_info = "{person: none, distance: 0mm}"
         #cv2.imshow("Livestream", frame)
-        cv2.imwrite("webcam_cap.jpg", frame)
+    frame = cv2.resize(frame, (640, 360))
+    cv2.imwrite("webcam_cap.jpg", frame)
 
-        send_file("webcam_cap.jpg")
+    print "Sending a frame"
 
-        if cv2.waitKey(10) & 0xFF == ord('q'):
-            break
-    time.sleep(5)
+    send_video_file("webcam_cap.jpg")
+    send_auth_stat(person_info)
+
+    if cv2.waitKey(10) & 0xFF == ord('q'):
+        break
+    time.sleep(2)
 
 cam.release()
 cv2.destroyAllWindows()
